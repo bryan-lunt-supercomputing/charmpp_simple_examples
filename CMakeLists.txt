@@ -51,3 +51,6 @@ add_subdirectory("src/PhasedHello")
 add_subdirectory("src/SDAGHello")
 
 add_subdirectory("src/OrderedHello")
+
+
+add_subdirectory("src/SDAGHello2")

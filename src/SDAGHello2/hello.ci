@@ -1,0 +1,38 @@
+module hello {
+
+  array [1D] Hello {
+    entry Hello(int in_size, int in_phases);
+
+	entry void start_running();
+	entry void start_running2();
+
+	entry void run_until_done(){
+		for(current_p = 0;current_p <= p;++current_p){
+			when receive[current_p](int left_phase, int left_origin, int left_direction),
+					receive[current_p](int right_phase, int right_origin, int right_direction)
+					serial{
+						compute_phase(left_origin, left_phase, left_direction,
+									right_origin, right_phase, right_direction);
+					}
+		}
+	};
+
+	entry void run_until_done2(){
+		for(current_p = 0;current_p <= p;){//phase will get incremented elsewhere
+			when receive[current_p](int phase, int from, int direction)
+			serial {
+				receive_impl(from, phase, direction);
+				n_received++;
+				if(n_received == neighbors){
+					handle_phase();
+					current_p++;
+					n_received = 0;
+				}
+			}
+		}
+	};
+
+	entry void receive(int sender_phase, int from, int direction);
+  };
+
+};
