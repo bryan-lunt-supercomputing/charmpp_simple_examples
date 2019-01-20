@@ -49,3 +49,5 @@ add_subdirectory("src/BroadcastHelloWorld")
 add_subdirectory("src/PhasedHello")
 
 add_subdirectory("src/SDAGHello")
+
+add_subdirectory("src/OrderedHello")
