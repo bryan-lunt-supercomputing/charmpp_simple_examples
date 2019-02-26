@@ -76,6 +76,13 @@ void Hello ::start_running2() {
   thisProxy[thisIndex].run_until_done2();
 }
 
+void Hello ::start_running3() {
+  this->current_p = -1;
+
+  handle_phase( );
+  thisProxy[thisIndex].run_until_done2();
+}
+
 void Hello ::handle_phase( void ) {
 
 

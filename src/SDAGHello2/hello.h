@@ -24,6 +24,7 @@ private:
 			  int right_origin, int right_phase, int right_direction);
 
   void start_running2( void );
+  void start_running3( void );
   void handle_phase( void );
 };
 

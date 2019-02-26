@@ -39,7 +39,7 @@ Main::Main(CkArgMsg* msg) {
 
   // Invoke the "sayHi()" entry method on all of the
   //   elements in the helloArray array of chare objects.
-  helloArray.start_running2();
+  helloArray.start_running3();
 }
 
 
