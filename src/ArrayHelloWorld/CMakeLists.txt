@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(CharmArrayHelloWorld LANGUAGES C CXX)
+#project(CharmArrayHelloWorld LANGUAGES C CXX)
 
 # Location of additional cmake modules
 #

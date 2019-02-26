@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-#project(CharmArrayHelloWorld LANGUAGES C CXX)
+#project(CharmSDAGHelloWorld2 LANGUAGES C CXX)
 
 # Location of additional cmake modules
 #
@@ -27,5 +27,14 @@ else()
         message(FATAL_ERROR "Charm not found!")
 endif()
 
-add_executable(hello "main.C" "main.h" "main.ci")
-set_charm_target(hello)
+add_library(sdag_hello3_lib  "hello.C" "hello.h" "hello.ci" "main.ci")
+set_charm_target(sdag_hello3_lib)
+
+add_executable(sdag_hello3 "main.C" "main.h" "main.ci")
+set_charm_target(sdag_hello3)
+target_link_libraries(sdag_hello3 sdag_hello3_lib)
+
+#include("allprops")
+#print_target_properties(foobar)
+#get_target_property(BLAH foobar CHARM_SOURCES)
+#message("CHARM_SOURCES " ${BLAH})

@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 2.8)
-project(CharmSDAGHelloWorld LANGUAGES C CXX)
+#project(CharmSDAGHelloWorld LANGUAGES C CXX)
 
 # Location of additional cmake modules
 #
