@@ -19,6 +19,7 @@ private:
   Hello(CkMigrateMessage *msg);
 
   void pup(PUP::er &p);
+  virtual void ResumeFromSync();
 
   /// Entry Methods ///
   //void receive(int from, int sender_phase, int direction);

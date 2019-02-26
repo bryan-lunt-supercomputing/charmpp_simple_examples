@@ -23,6 +23,8 @@ Hello::Hello(int in_size, int in_phases) {
   this->last_cpu = CkMyPe();
   this->difficulty = CkMyPe() == 0 ? rand()*100 : 1;
 
+  this->usesAtSync = true;
+
   CkPrintf("Element  %d created on processor %d .\n",
 		   thisIndex, CkMyPe());
 }
@@ -47,7 +49,12 @@ void Hello::pup(PUP::er &p){
 	p|difficulty;
 }
 
-void Hello ::receive_impl(int from, int sender_phase, int direction) {
+void Hello::ResumeFromSync(){
+	CkPrintf("\nElement %d Resuming from sync %d :: %d.\n",
+			   thisIndex, this->last_cpu, CkMyPe());
+}
+
+void Hello::receive_impl(int from, int sender_phase, int direction) {
 
   // Have this chare object say hello to the user.
   //CkPrintf("Element  %d (phase %d) on processor %d received from %d (p=%d) in direction %d.\n",thisIndex, this->current_p, CkMyPe(), from, sender_phase, direction);
@@ -102,6 +109,7 @@ void Hello ::compute_phase(int left_origin, int left_phase, int left_direction,
   thisProxy[right_neighbor].receive(this->current_p+1, thisIndex, 1);
 
   //CkPrintf("Element  %d on processor %d finishing phase %d.\n", thisIndex, CkMyPe(), this->current_p);
+	this->AtSync();
 }
 
 void Hello ::start_running2() {
