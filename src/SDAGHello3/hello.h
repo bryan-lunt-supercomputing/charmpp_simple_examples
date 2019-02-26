@@ -11,6 +11,7 @@ private:
 	int neighbors;
 	int n_received;
 	int last_cpu;
+	int difficulty;
  public:
 
   /// Constructors ///

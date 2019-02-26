@@ -21,6 +21,7 @@ Hello::Hello(int in_size, int in_phases) {
   this->neighbors = (thisIndex == 0 || thisIndex == in_size-1) ? 1 : 2;
   this->n_received = 0;
   this->last_cpu = CkMyPe();
+  this->difficulty = CkMyPe() == 0 ? rand()*100 : 1;
 
   CkPrintf("Element  %d created on processor %d .\n",
 		   thisIndex, CkMyPe());
@@ -43,13 +44,13 @@ void Hello::pup(PUP::er &p){
 	p|neighbors;
 	p|n_received;
 	p|last_cpu;
+	p|difficulty;
 }
 
 void Hello ::receive_impl(int from, int sender_phase, int direction) {
 
   // Have this chare object say hello to the user.
-  CkPrintf("Element  %d (phase %d) on processor %d received from %d (p=%d) in direction %d.\n",
-           thisIndex, this->current_p, CkMyPe(), from, sender_phase, direction);
+  //CkPrintf("Element  %d (phase %d) on processor %d received from %d (p=%d) in direction %d.\n",thisIndex, this->current_p, CkMyPe(), from, sender_phase, direction);
 
   //CkAssert(sender_phase == this->current_p);
   //assert(sender_phase == this->current_p);
@@ -81,29 +82,26 @@ void Hello ::compute_phase(int left_origin, int left_phase, int left_direction,
 
   this->n_received = 0;
   // Have this chare object say hello to the user.
-  CkPrintf("Element  %d on processor %d starting phase %d.\n",
-           thisIndex, CkMyPe(), this->current_p);
+  //CkPrintf("Element  %d on processor %d starting phase %d.\n", thisIndex, CkMyPe(), this->current_p);
 
-	int upper = rand();
-	for(int i = 0;i<upper;++i){
-		for(int j = 0;j<1000;++j){
-			double foobar = pow((double)i,2.0);
+	for(int i = 0;i<this->difficulty;++i){
+		for(int j = 0;j<10000;++j){
+			double foobar = pow((double)i,2.1234);
 			(void)foobar;
 		}
-		std::this_thread::sleep_for(std::chrono::milliseconds(1));
+		std::this_thread::sleep_for(std::chrono::milliseconds(10));
 	}
 
   //Signal my neighbors
   int left_neighbor = (thisIndex+this->size-1)%(this->size);
   int right_neighbor = (thisIndex+1)%(this->size);
 
-  CkPrintf("Element  %d on processor %d signalling phase %d.\n",
-		   thisIndex, CkMyPe(), this->current_p);
+  //CkPrintf("Element  %d on processor %d signalling phase %d.\n", thisIndex, CkMyPe(), this->current_p);
+
   thisProxy[left_neighbor].receive(this->current_p+1, thisIndex, -1);
   thisProxy[right_neighbor].receive(this->current_p+1, thisIndex, 1);
 
-  CkPrintf("Element  %d on processor %d finishing phase %d.\n",
-  		 thisIndex, CkMyPe(), this->current_p);
+  //CkPrintf("Element  %d on processor %d finishing phase %d.\n", thisIndex, CkMyPe(), this->current_p);
 }
 
 void Hello ::start_running2() {
@@ -132,8 +130,7 @@ void Hello ::handle_phase( void ) {
 
   this->n_received = 0;
   // Have this chare object say hello to the user.
-  CkPrintf("Element  %d on processor %d starting phase %d.\n",
-           thisIndex, CkMyPe(), this->current_p);
+  //CkPrintf("Element  %d on processor %d starting phase %d.\n", thisIndex, CkMyPe(), this->current_p);
 
 	//Signal my neighbors, without wrapping boundary conditions
 	if(thisIndex > 0){

@@ -13,7 +13,7 @@ Main::Main(CkArgMsg* msg) {
   // Initialize the local member variables
   doneCount = 0;    // Set doneCount to 0
   numElements = 500;  // Default numElements to 5
-  int numIterations = 1000;
+  int numIterations = 10000;
 
   // There should be 0 or 1 command line arguements.
   //   If there is one, it is the number of "Hello"
